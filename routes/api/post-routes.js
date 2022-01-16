@@ -98,5 +98,16 @@ router.get('/', (req, res) => {
         res.status(500).json(err);
       });
   });
+
+  Post.findAll({
+    attributes: ['id', 'post_url', 'title', 'created_at'],
+    order: [['created_at', 'DESC']], 
+    include: [
+      {
+        model: User,
+        attributes: ['username']
+      }
+    ]
+  })
   
 module.exports = router;
