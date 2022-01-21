@@ -3,6 +3,9 @@ const sequelize = require('../config/connection');
 const { Post, User, Comment } = require('../models')
 
 router.get('/', (req, res) => {
+    console.log(req.session);
+
+    // other logic...
     Post.findAll({
         attributes: [
             'id',
@@ -40,6 +43,18 @@ router.get('/', (req, res) => {
 router.get('/', (req, res) => {
     console.log(dbPostData[0]);
     res.render('homepage', { posts });
+});
+
+router.get('/login', (req, res) => {
+    res.render('login');
+});
+router.get('/login', (req, res) => {
+    if (req.session.loggedIn) {
+        res.redirect('/');
+        return;
+    }
+
+    res.render('login');
 });
 
 
