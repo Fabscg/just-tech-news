@@ -42,7 +42,10 @@ router.get('/', (req, res) => {
 
 router.get('/', (req, res) => {
   console.log(dbPostData[0]);
-  res.render('homepage', { posts });
+  res.render('homepage', {
+    posts,
+    loggedIn: req.session.loggedIn
+  });
 });
 
 router.get('/login', (req, res) => {
@@ -107,16 +110,18 @@ router.get('/post/:id', (req, res) => {
       }
 
       // serialize the data
-      const post = dbPostData.get({ plain: true });
+      const post = dbPostData.get({ plain: true })
 
       // pass data to template
-      res.render('single-post', { post });
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
+      res.render('single-post', {
+        post,
+        loggedIn: req.session.loggedIn
+      })
+        .catch(err => {
+          console.log(err);
+          res.status(500).json(err);
+        });
     });
-});
-
+})
 
 module.exports = router;

@@ -143,4 +143,12 @@ router.delete('/:id', (req, res) => {
     });
 });
 
+router.get('/post/:id', (req, res) => {
+  if (req.session.loggedIn) {
+    res.render('single-post');
+  }
+  else {
+    res.render('single-post-no-form');
+  }
+});
 module.exports = router;
